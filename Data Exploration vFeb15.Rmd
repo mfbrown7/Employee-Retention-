@@ -1,0 +1,465 @@
+---
+title: 'Data Analysis Capstone Project'
+output:
+  word_document: default
+  pdf_document: default
+  html_document:
+    df_print: paged
+---
+
+Load the data and clean-up header column name 
+```{r}
+data <- read.csv("C:/Users/mfbro/Downloads/WA_Fn-UseC_-HR-Employee-Attrition.csv", header=TRUE, sep=",")
+data$Age <- data$ï..Age
+data <- data[-1]
+```
+Examine the structure 
+```{r}
+str(data)
+```
+Examine summary structure 
+```{r}
+summary(data)
+```
+Examine each variable using plot or hist
+```{r}
+hist(data$Age)
+plot(data$Attrition)
+plot(data$BusinessTravel)
+hist(data$DailyRate)
+plot(data$Department)
+hist(data$DistanceFromHome)
+hist(data$Education)
+plot(data$EducationField)
+plot(data$EmployeeCount)
+plot(data$EmployeeNumber)
+hist(data$EnvironmentSatisfaction)
+plot(data$Gender)
+hist(data$HourlyRate)
+hist(data$JobInvolvement)
+hist(data$JobLevel)
+plot(data$JobRole)
+hist(data$JobSatisfaction)
+plot(data$MaritalStatus)
+hist(data$MonthlyIncome)
+hist(data$MonthlyRate)
+hist(data$NumCompaniesWorked)
+plot(data$Over18)
+plot(data$OverTime)
+hist(data$PercentSalaryHike)
+hist(data$PerformanceRating)
+hist(data$RelationshipSatisfaction)
+plot(data$StandardHours)
+hist(data$StockOptionLevel)
+hist(data$TotalWorkingYears)
+hist(data$TrainingTimesLastYear)
+hist(data$WorkLifeBalance)
+hist(data$YearsAtCompany)
+hist(data$YearsInCurrentRole)
+hist(data$YearsSinceLastPromotion)
+hist(data$YearsWithCurrManager)
+```
+Findings from the graph analysis are as follows: 
+
+Age - employee are young (mean age is 36 years) 
+
+Attrition - attrition rate is 16% 
+
+Business Travel - 80% of employees travel rarely or not at all
+
+Daily rate - distribution is flat  
+
+Department - 65% of employees work in R&D, 30% in Sales  
+
+Distance from home - most employees work < 10km from home
+
+Education - 65% of employees have bachelor degree or better 
+
+Education Field - 80% of employees have a technical degree 
+
+EmployeeCount - only one value, will be removed 
+
+EmployeeNumber- internal number, will be removed 
+
+Environment Satisfaction - most employees have a high environment satisfaction 
+
+Gender - 60% men, 40% women
+
+Hourly Rate - distribution is flat 
+
+Job Involvement - most employees have a high job involvement 
+
+Job level - the job level for most employees is fairly low 
+
+Job Role - 17% management, 22% sales, technical 60%
+
+Job Satisfaction - most employees have a high job satisfaction  
+
+Maritial status - 22% divorced, 46% married, 31% single
+
+Monthly Income - distribution is skewed, most employees have a low monthly income (median = 4900 vs mean = 6500)
+
+Monthly rate - distribution is flat 
+
+Num Companies Worked - most employees have only worked for a few companies (median = 2)
+
+Over18 - only one value, will be removed 
+
+Overtime - 30% of employees get overtime, 70% do not get overtime 
+
+Percent salary Hike - most employees got the average salary 
+
+Performance Rating - distribution is skewed, there are only 3 and 4 ratings 
+
+Relationship Satisfaction - most employees are satisfied with relationship
+
+StandardHours - only one value, will be removed
+
+Stock Options Levels - 80% of employees get zero or few stock options 
+
+Total Working Years - most employees have about 10 years work experience 
+
+Training Times - most employees were trained 2 - 3 times in the year 
+
+Work Life Balance - most employees are happy with work life balance 
+
+Years at Company - 80% of employees have been with the company less than 10 years 
+
+Years in Role - most employees have been in their role less than 5 years 
+
+Years since promotion - most employees have been promoted within last years 
+
+Years with manager - most employees have been with their manager less than 5 years 
+
+
+```{r}
+
+```
+
+Check for missing data 
+```{r}
+sum(is.na(data))
+```
+Prepare Bar Charts against attrition against for each remaining variable  
+```{r}
+plot_age = table(data$Attrition, data$Age)
+barplot(plot_age, main="Age vs Attrition", xlab="Age", legend=rownames(plot_age), beside = TRUE)
+#
+plot_travel = table(data$Attrition, data$BusinessTravel)
+barplot(plot_travel, main = "Travel Frequency vs Attrition", xlab = "Travel Frequency", legend = rownames(plot_travel), beside = TRUE)
+#
+plot_dailyrate = table(data$Attrition, data$DailyRate)
+barplot(plot_dailyrate, main = "Daily Rate vs Attrition", xlab = "Daily Rate", legend=rownames(plot_dailyrate), beside = TRUE)
+#
+plot_dept = table(data$Attrition, data$Department)
+barplot(plot_dept, main = "Department vs Attrition", xlab ="Dept", legend=rownames(plot_dept), beside = TRUE)
+#
+plot_distance = table(data$Attrition, data$DistanceFromHome)
+barplot(plot_distance, main = "Distance from Home vs Attrition", xlab="Distance from Home", legend=rownames(plot_distance), beside = TRUE)
+#
+plot_education = table(data$Attrition, data$Education)
+barplot(plot_education, main ="Education vs Attrition", xlab="Education", legend=rownames(plot_education), beside = TRUE)
+#
+plot_field = table(data$Attrition, data$EducationField)
+barplot(plot_field, main = "Education Field vs Attrition", xlab="Education Field", legend=rownames(plot_field), beside = TRUE)
+#
+plot_envsat = table(data$Attrition, data$EnvironmentSatisfaction)
+barplot(plot_envsat, main="Environment Satisfaction vs Attrition", xlab="Environment Satisfaction", legend = rownames(plot_envsat), beside = TRUE)
+#
+plot_gender = table(data$Attrition, data$Gender)
+barplot(plot_gender, main="Gender vs Attrition", xlab = "Gender", legend=rownames(plot_gender), beside=TRUE)
+#
+plot_hourlyrate = table(data$Attrition, data$HourlyRate)
+barplot(plot_hourlyrate, main="Hourly rate vs Attrition", xlab="Hourly Rate", legend=rownames(plot_hourlyrate), beside = TRUE)
+#
+plot_involvement = table(data$Attrition, data$JobInvolvement)
+barplot(plot_involvement, main="Job Involvement vs Attrition", xlab="Job Involvement", legend=rownames(plot_involvement), beside = TRUE)
+#
+plot_joblevel = table(data$Attrition, data$JobLevel)
+barplot(plot_joblevel, main="Job Level", xlab="Job Level", legend=rownames(plot_joblevel), beside = TRUE)
+#
+plot_jobrole = table(data$Attrition, data$JobRole)
+barplot(plot_jobrole, main="Job Role vs Attrition", xlab = "Job Role", legend=rownames(plot_jobrole), beside = TRUE)
+#
+plot_jobsat = table(data$Attrition, data$JobSatisfaction)
+barplot(plot_jobsat, main="Job Satisfaction vs Attrition", xlab="Job Satisfaction", legend=rownames(plot_jobsat), beside = TRUE)
+#
+plot_maritial = table(data$Attrition, data$MaritalStatus)
+barplot(plot_maritial, main="Maritial Status vs Attrition", xlab="Maritial Status", legend=rownames(plot_maritial), beside = TRUE)
+#
+plot_monthlyincome = table(data$Attrition, data$MonthlyIncome)
+barplot(plot_monthlyincome, main="Monthly Income vs Attrition", xlab = "Monthly Income", legend=rownames(plot_monthlyincome), beside = TRUE)
+#
+plot_monthlyrate = table(data$Attrition, data$MonthlyRate)
+barplot(plot_monthlyrate, main="Monthly Rate vs Attrition", xlab = "Monthly Income", legend=rownames(plot_monthlyincome), beside = TRUE)
+#
+plot_numcompany = table(data$Attrition, data$NumCompaniesWorked)
+barplot(plot_numcompany, main="Number of Company Worked vs Attrition", xlab="Number of Company Worked", legend=rownames(plot_numcompany), beside = TRUE)
+#
+plot_overtime = table(data$Attrition, data$OverTime)
+barplot(plot_overtime, main="Overtime vs Attrition", xlab="Overtime", legend=rownames(plot_overtime), beside = TRUE)
+#
+plot_salaryhike = table(data$Attrition, data$PercentSalaryHike)
+barplot(plot_salaryhike, main="Percent Salary Hike vs Attrition", xlab="Percent Salary Hike", legend=rownames(plot_salaryhike), beside = TRUE)
+#
+plot_rating = table(data$Attrition, data$PerformanceRating)
+barplot(plot_rating, main="Performance Rating vs Attrition", xlab="Performance Rating", legend=rownames(plot_rating), beside = TRUE)
+#
+plot_relsat = table(data$Attrition, data$RelationshipSatisfaction)
+barplot(plot_relsat, main="Relationship Satisfaction vs Attrition", xlab="Relationship Satisfaction", legend=rownames(plot_relsat), beside = TRUE)
+#
+plot_options = table(data$Attrition, data$StockOptionLevel)
+barplot(plot_options, main="Stock Option Level vs Attrition", xlab="Stock Options Level", legend=rownames(plot_options), beside = TRUE)
+#
+plot_totalworkyears = table(data$Attrition, data$TotalWorkingYears)
+barplot(plot_totalworkyears, main ="Total Working Years vs Attrition", xlab = "Total Working Years ", legend=rownames(plot_totalworkyears), beside = TRUE)
+#
+plot_training = table(data$Attrition, data$TrainingTimesLastYear)
+barplot(plot_training, main="Training Amount vs Attrition", xlab="Training Amount", legend=rownames(plot_training), beside = TRUE)
+#
+plot_worklife = table(data$Attrition, data$WorkLifeBalance)
+barplot(plot_worklife, main="Worklife balance vs Attrition", xlab="Worklife balance", legend=rownames(plot_worklife), beside = TRUE)
+#
+plot_yearscompany = table(data$Attrition, data$YearsAtCompany)
+barplot(plot_yearscompany, main="Years at Company vs Attrition", xlab="Years at Company", legend=rownames(plot_yearscompany), beside = TRUE)
+#
+plot_yearsrole = table(data$Attrition, data$YearsInCurrentRole)
+barplot(plot_yearsrole, main="Year in Role vs Attrition", xlab="Years in Role", legend = rownames(plot_yearsrole), beside = TRUE)
+#
+plot_yearsmanager = table(data$Attrition, data$YearsWithCurrManager)
+barplot(plot_yearsmanager, main="Years with manager vs Attrition", xlab = "Years with manager", legend=rownames(plot_yearsmanager), beside = TRUE)
+#
+plot_promotion = table(data$Attrition, data$YearsSinceLastPromotion)
+barplot(plot_promotion, main="Years since promotion vs Attrition", xlab="Years since promotion", legend=rownames(plot_promotion), beside = TRUE)
+```
+Prepare frequency tables against attrition for each categorical variable
+```{r}
+plot_travel = table(data$Attrition, data$BusinessTravel)
+prop.table(plot_travel, 2) 
+#
+plot_dept = table(data$Attrition, data$Department)
+prop.table(plot_dept, 2) 
+#
+plot_education = table(data$Attrition, data$Education)
+Names = c("Below College", "College", "bachelor", "Masters", "PHD")
+colnames(plot_education) <- Names
+prop.table(plot_education, 2)
+#
+plot_field = table(data$Attrition, data$EducationField)
+prop.table(plot_field, 2)
+#
+plot_envsat = table(data$Attrition, data$EnvironmentSatisfaction)
+Names = c("Low", "Medium", "High", "Very High")
+colnames(plot_envsat) <- Names
+prop.table(plot_envsat, 2)
+#
+plot_gender = table(data$Attrition, data$Gender)
+prop.table(plot_gender, 2)
+#
+plot_involvement = table(data$Attrition, data$JobInvolvement)
+Names = c("Low", "Medium", "High", "Very High")
+colnames(plot_involvement) <- Names
+prop.table(plot_involvement, 2)
+#
+plot_joblevel = table(data$Attrition, data$JobLevel)
+Names = c("Lowest", "Low", "Medium", "High", "Highest")
+colnames(plot_joblevel) <- Names
+prop.table(plot_joblevel, 2)
+#
+plot_jobrole = table(data$Attrition, data$JobRole)
+prop.table(plot_jobrole, 2)
+#
+plot_jobsat = table(data$Attrition, data$JobSatisfaction)
+Names = c("Low", "Medium", "High", "Very High")
+colnames(plot_jobsat) <- Names
+prop.table(plot_jobsat, 2)
+#
+plot_maritial = table(data$Attrition, data$MaritalStatus)
+prop.table(plot_maritial, 2)
+#
+plot_overtime = table(data$Attrition, data$OverTime)
+prop.table(plot_overtime, 2)
+#
+plot_rating = table(data$Attrition, data$PerformanceRating)
+Names = c("Excellent", "Outstanding")
+colnames(plot_rating) <- Names
+prop.table(plot_rating, 2)
+#
+plot_relsat = table(data$Attrition, data$RelationshipSatisfaction)
+Names = c("Low", "Medium", "High", "Very High")
+colnames(plot_relsat) <- Names
+prop.table(plot_relsat, 2)
+#
+plot_options = table(data$Attrition, data$StockOptionLevel)
+Names = c("None", "Low", "Medium", "High")
+colnames(plot_options) <- Names
+prop.table(plot_options, 2)
+#
+plot_worklife = table(data$Attrition, data$WorkLifeBalance)
+Names = c("Low", "Medium", "High", "Very High")
+colnames(plot_worklife) <- Names
+prop.table(plot_worklife, 2)
+#
+```
+Prepare boxplots for each numerical variable vs attrition
+```{r}
+plot(x=data$Attrition, y=data$Age, main ="Attrition vs Age")
+plot(x=data$Attrition, y=data$DailyRate, main ="Attrition vs Daily Rate")
+plot(x=data$Attrition, y=data$DistanceFromHome, main ="Attrition vs Distance from Home")
+plot(x=data$Attrition, y=data$HourlyRate, main = "Attrition vs Hourly Rate")
+plot(x=data$Attrition, y=data$MonthlyIncome, main="Attrition vs Monthly Income")
+plot(x=data$Attrition, y=data$MonthlyRate, main="Attrition vs Monthly Rate")
+plot(x=data$Attrition, y=data$NumCompaniesWorked, main="Attrition vs Number Companies Worked")
+plot(x=data$Attrition, y=data$PercentSalaryHike, main="Attrition vs Percent Salary Hike")
+plot(x=data$Attrition, y=data$TotalWorkingYears, main="Attrition vs Total Working Years")
+plot(x=data$Attrition, y=data$TrainingTimesLastYear, main="Attrition vs Training Times")
+plot(x=data$Attrition, y=data$YearsAtCompany, main="Attrition vs Years at Company")
+plot(x=data$Attrition, y=data$YearsInCurrentRole, main="Attrition vs Years in Current Role")
+plot(x=data$Attrition, y=data$YearsSinceLastPromotion, main="Attrition vs Years since last Promotion")
+plot(x=data$Attrition, y=data$YearsWithCurrManager, main="Attrition vs Years with Current manager")
+```
+
+```{r}
+```
+```
+Results of the attrition analysis are as follows: 
+
+Age - young employees have a higher attrition rate   
+
+Business Travel - employees who travel frequently have highe 
+
+Daily rate - no significant difference 
+
+Department - Sales and Human Resources have higher attrition rates than R&D
+
+Distance from Home - employees who commute farther have higher attrition 
+
+Education - employees with lower education (no college, college, etc.) are somewhat more likely to quit 
+
+Education Field - there are differences by field, people in Sales and HR most likley to quit 
+
+Employee Count - N/A (variable will be removed)   
+
+Employee Number - N/A (variable will be removed)     
+
+Environment Satisfaction - employees with low environment satisfaction much more likley to quit  
+
+Gender - male and femal employees quit at similar rates 
+
+Hourly rate - no significant difference   
+
+Job Involvement - employees with low job involvement much more likly to quit  
+
+Job Level - employees at low levels more likley to quit 
+
+Job Role - employees in Sales and Human Resources more likly to quit
+
+Job satisfaction - employees with low job satisfaction levels more likley to quit 
+
+Maritial Status - single employees more liklely to quit 
+
+Monthly Income - employees with lower incomes more likly to quit 
+
+Monthly rate - no significant difference 
+
+Number of companies worked - employyes who have worked for few companies more likley to leave 
+
+Over 18 - N/A (variable will be removed)   
+
+Overtime - employees who get overtime much more likley to quit 
+
+Percent salary hike - no significant differenc between employees who stay or leave 
+
+Performance rating - no significant difference between emploees who stay and leave.  
+
+Relationship Satisfaction - employees with very low relationship satisfaction more likley to quit 
+
+Standard hours - N/A (variable will be removed)   
+
+Stock Options - employees with no options more likley to quit 
+
+Total working years - employees with fewer working years more likley to quit 
+
+Training times - people with very little training more likley to quit
+
+Worklife balance - employees with low worklife balance much more likley to quit 
+
+Years at company - employees with fewer years more likley to quit 
+
+Years in current role - employyes most likley to leave in first few years in role 
+
+Years since last promotion - no significant difference between employees who stay or leave 
+
+Years with current manager - employees most likley to quit first year 
+```{r}
+
+```
+Examine correlation between the remaing varibles. 
+Remove dependent variable  plus four redundant variables identified above  
+```{r}
+# remove varibles
+mydata <- data.frame(data)
+mydata <- mydata[-1]
+mydata <- mydata[-7]
+mydata <- mydata[-7]
+mydata <- mydata[-18]
+mydata <- mydata[-22]
+# convert factors to numeric
+mydata$BusinessTravel <- as.numeric(data$BusinessTravel)
+mydata$Department <- as.numeric(mydata$Department)
+mydata$EducationField <- as.numeric(mydata$EducationField)
+mydata$Gender <- as.numeric(mydata$Gender)
+mydata$JobRole <- as.numeric(mydata$JobRole)
+mydata$MaritalStatus <- as.numeric(mydata$MaritalStatus)
+mydata$OverTime <- as.numeric(mydata$OverTime)
+# calculate correlation 
+mydata.cor = cor(mydata)
+round(mydata.cor,2)
+```
+Plot Correlations 
+```{r}
+install.packages("corrplot")
+library(corrplot)
+corrplot(mydata.cor)
+```
+An analysis of corr and corrplot shows that a number of variables seem to have strong (corr 0.60 - 0.79) or very strong (corr > 0.80) correlations:
+- job role vs dept (corr = 0.66)
+- job level vs monthly income (corr = 0.95)
+- job level vs total working years (corr = 0.78)
+- monthly income vs total working years (corr = 0.77)
+- age vs total working years(corr = 0.68)
+- percent salary hike vs performance rating (corr = 0.77)
+- years at company vs total working years (corr =0.63)
+- years at company vs years in current role (corr = 0.76)
+- years with current manager vs years at company (corr =0.77)
+- years with current manager vs years in current role (corr=0.77)
+- years at company vs years since last promotion (corr =0.62)
+
+```{r}
+
+```
+
+#
+```{r}
+
+```
+# 
+
+```{r}
+
+```
+#
+
+```{r}
+
+```
+#
+```{r}
+
+```
+#
+```{r}
+
+```
+# 
+
